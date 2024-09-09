@@ -1,0 +1,37 @@
+{
+  "content":"",
+  "image":"https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/Upload/6c669115-07f1-446c-afbc-159013adb177.png",
+    "modelList": [
+      {
+        "layer": 1,
+        "parallel": 1,
+        "models": [
+          {
+            "modelName": "resnet50-CLDC.onnx",
+            "modelUrl": "https://obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
+            "isAPI": 0,
+            "weight":1
+          },
+          {
+            "modelName": "resnet50-CLDC.onnx",
+            "modelUrl": "https://obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
+            "isAPI": 0,
+            "weight":1
+          }
+        ]
+      },
+      {
+        "layer": 2,
+        "parallel": 0,
+        "models": [
+          {
+            "modelName": "get_zidongtaichu",
+            "modelUrl": "https://www.baidu.com",
+            "isAPI": 1,
+            "weight":1
+          }
+        ]
+      }
+    ],
+    "answer":""
+  }
