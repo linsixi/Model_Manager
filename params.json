@@ -1,0 +1,15 @@
+{
+  "api": "https://ai-maas.wair.ac.cn/maas/v1/chat/completions",
+  "params": [
+    {
+      "model": "taichu_llm",
+      "messages": [ {"role": "user", "content": "'苹果'：这是什么"} ],
+      "stream": false
+    }
+  ],
+  "headers": [
+    {
+      "Authorization": "Bearer tlf3tc8sltk89etyx0p16u5p"
+    }
+  ]
+}
