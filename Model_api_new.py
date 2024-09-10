@@ -132,10 +132,8 @@ def get_qianfan_graph(question, per):
     object_key = os.path.join(object_key_first + '/' + image_id + '.png')
     image.save(image_local_folder)
     image_url = upload_file(bucket_name, object_key, image_local_folder, ENDPOINT, AK, SK)
-    print(image_url,"处理前")
     # 处理image_url变成可以下载的url，例子在upload文件里
     image_url=convert_url(image_url,bucket_name)
-    print(image_url)
     return image_url
 
 
