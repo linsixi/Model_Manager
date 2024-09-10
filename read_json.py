@@ -8,7 +8,7 @@ import argparse
 # 自建使用函数
 import MAS_Function  # MAS收敛函数
 import model_judge as judge  # 判断模型类型并输出结果
-import Model_api as api  # 调用大模型的函数
+import Model_api_new as api  # 调用大模型的函数
 from download import download_file  # 下载模型函数
 import upload  # 上传图片函数
 from DP_Function import differential_privacy_update
@@ -80,7 +80,9 @@ def read_json(data):
 
                 else:  # 模型调用大模型
                     n = switcher.get(model["modelName"])
-                    value = api.api_check(n, value)
+                    question_text=model["question"]
+                    value = api.api_check(n, value,question_text)
+
 
         else:
             print("并行")  # 目前只支持文字输出
@@ -118,3 +120,4 @@ def read_json(data):
         print("错误信息：", str(e))"""
 
     data.update({"answer": str(value)})
+    return data

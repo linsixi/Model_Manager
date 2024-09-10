@@ -5,25 +5,25 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import base64
 
+
 def personalized_api():
-    print( '请给出你的请求文件' )
-    with open( './params.json', 'r', encoding='utf-8' ) as f:
-        info = json.load( f )
+    print('请给出你的请求文件')
+    with open('./params.json', 'r', encoding='utf-8') as f:
+        info = json.load(f)
         api = info["api"]
-        print( api )
+        print(api)
         params = info["params"][0]
-        print( params )
+        print(params)
         headers = info["headers"][0]
-        print( headers )
-    response = requests.post( api, json=params, headers=headers, stream=False )
+        print(headers)
+    response = requests.post(api, json=params, headers=headers, stream=False)
     if response.status_code == 200:
         response_json = response.json()
-        with open( './response.json', 'w', encoding='utf-8' ) as f:
-            json.dump( response_json, f, indent=4, ensure_ascii=False )
+        with open('./response.json', 'w', encoding='utf-8') as f:
+            json.dump(response_json, f, indent=4, ensure_ascii=False)
     else:
         body = response.content.decode('utf-8')
         print(f'request failed,status_code:{response.status_code},body:{body}')
-
 
 
 def get_access_token_qianfan():
@@ -37,10 +37,11 @@ def get_access_token_qianfan():
     response = requests.request("POST", url, headers=headers, data=payload)
     return response.json().get("access_token")
 
-def get_zidongtaichu( question, per ):
+
+def get_zidongtaichu(question, per):
     # 紫东太初文本生成
     api = 'https://ai-maas.wair.ac.cn/maas/v1/chat/completions'
-    headers = { 'Authorization': 'Bearer tlf3tc8sltk89etyx0p16u5p' }
+    headers = {'Authorization': 'Bearer tlf3tc8sltk89etyx0p16u5p'}
     params = {
         'model': 'taichu_llm',
         'messages': [{"role": "user", "content": f"'{question}':{per}"}],
@@ -57,10 +58,11 @@ def get_zidongtaichu( question, per ):
         print(f'request failed,status_code:{response.status_code},body:{body}')
 
 
-def get_qianfan_text( question, per ):
+def get_qianfan_text(question, per):
     # 千帆文本生成
     access_token = get_access_token_qianfan()
-    url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro?access_token=" + str(access_token)
+    url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro?access_token=" + str(
+        access_token)
     payload = json.dumps({
         "messages": [
             {
@@ -73,19 +75,20 @@ def get_qianfan_text( question, per ):
         'Content-Type': 'application/json'
     }
 
-    response = requests.request("POST", url, headers=headers, data = payload )
+    response = requests.request("POST", url, headers=headers, data=payload)
     if response.status_code == 200:
         response_json = response.json()
-        content = response_json[ 'result' ]
+        content = response_json['result']
         return content
     else:
         body = response.content.decode('utf-8')
         print(f'request failed,status_code:{response.status_code},body:{body}')
 
 
-def get_qianfan_graph( question, per ):
+def get_qianfan_graph(question, per):
     access_token = get_access_token_qianfan()
-    url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/text2image/sd_xl?access_token=" + str( access_token )
+    url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/text2image/sd_xl?access_token=" + str(
+        access_token)
     payload = json.dumps({
         "prompt": f"'{question}':{per}",
         "size": "1024x1024",
@@ -105,50 +108,49 @@ def get_qianfan_graph( question, per ):
     response_dict = response.json()
     b64_image = response_dict['data'][0]['b64_image']
 
-    # # plt显示图片
-    # image_data = base64.b64decode( b64_image )
-    # image = Image.open(BytesIO(image_data))
-    # plt.imshow( image )
-    # plt.axis('off')
-    # plt.show()
+    # plt显示图片
+    image_data = base64.b64decode( b64_image )
+    image = Image.open(BytesIO(image_data))
+    plt.imshow( image )
+    plt.axis('off')
+    plt.show()
 
-def get_qianfan_read( question, per ):
+
+def get_qianfan_read(question, per):
     access_token = get_access_token_qianfan()
     url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/image2text/fuyu_8b?access_token=" + access_token
-    question = image_to_base64( question )
+    question = image_to_base64(question)
 
-    payload = json.dumps( {
+    payload = json.dumps({
         "prompt": f"{per}",
         "image": f"{question}"
-    } )
+    })
     headers = {
         'Content-Type': 'application/json'
     }
 
-    response = requests.request( "POST", url, headers = headers, data = payload )
+    response = requests.request("POST", url, headers=headers, data=payload)
     response_dict = response.json()
-    return response_dict[ 'result' ]
+    return response_dict['result']
 
-def image_to_base64( image_path ):
-    with open( image_path, "rb" ) as image_file:
+
+def image_to_base64(image_path):
+    with open(image_path, "rb") as image_file:
         image_data = image_file.read()
-        base64_encoded = base64.b64encode( image_data ).decode( 'utf-8' )
+        base64_encoded = base64.b64encode(image_data).decode('utf-8')
         return base64_encoded
 
 
-
-
-
-def choice( n ):
+def choice(n):
     switcher = {
-        '1':'千帆大模型文本功能',
-        '2':'紫东太初大模型文本功能',
-        '3':'千帆大模型图片生成功能',
-        '4':'千帆大模型图片解析功能',
-        '5':'用户自定义api'
+        '1': '千帆大模型文本功能',
+        '2': '紫东太初大模型文本功能',
+        '3': '千帆大模型图片生成功能',
+        '4': '千帆大模型图片解析功能',
+        '5': '用户自定义api'
     }
 
-    return switcher.get( n, '没有该功能' )
+    return switcher.get(n, '没有该功能')
 
 
 def api_check( n, question, per ):
@@ -162,21 +164,21 @@ def api_check( n, question, per ):
     # n = 5
     # per = '这是什么'
     # question = '苹果'
-    n = str( n )
-    need = choice( n )
+    n = str(n)
+    need = choice(n)
     print(f'我是{need}，正在对模型的输出结果进行最后一步处理...')
     if n != '5':
         if n == '1':
-            result = get_qianfan_text( question, per )
+            result = get_qianfan_text(question, per)
         elif n == '2':
-            result = get_zidongtaichu( question, per )
-        elif n == '3':S
-            result = get_qianfan_graph( question, per )
+            result = get_zidongtaichu(question, per)
+        elif n == '3':
+            result = get_qianfan_graph(question, per)
         elif n == '4':
-            result = get_qianfan_read( question, per )
+            result = get_qianfan_read(question, per)
         print('处理完成！')
         print(result)
     else:
         personalized_api()
-        print( '处理完成！' )
+        print('处理完成！')
 
