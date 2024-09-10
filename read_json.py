@@ -79,7 +79,7 @@ def read_json(data):
                     value = judge.get_value(model["modelName"], model_path, value, in_type)
 
                 else:  # 模型调用大模型
-                    n = switcher.get(model["modelName"])
+                    n = switcher.get(model["modelUrl"])
                     question_text=model["question"]
                     value = api.api_check(n, value,question_text)
 
@@ -97,10 +97,10 @@ def read_json(data):
                     url = model["modelUrl"].split('https://obs.cn-south-1.myhuaweicloud.com/')[-1]
                     print(url)
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
-                    value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type))
+                    value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type))#判断是什么类型
 
                 else:  # 模型调用大模型
-                    n = switcher.get(model["modelName"])
+                    n = switcher.get(model["modelUrl"])
                     question_text = model["question"]
                     value_tabel.append(api.api_check(n, value, question_text))
             weight_matrix = np.array(weight_matrix)
@@ -118,6 +118,6 @@ def read_json(data):
     """except Exception as e:
         print("错误类型：", type(e).__name__)
         print("错误信息：", str(e))"""
-
+    print(value)
     data.update({"answer": str(value)})
     return data

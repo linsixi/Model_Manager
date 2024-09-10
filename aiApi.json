@@ -25,8 +25,8 @@
         "parallel": 0,
         "models": [
           {
-            "modelName": "get_qianfan_graph",
-            "modelUrl": "",
+            "modelName": "Stable-Diffusion-XL",
+            "modelUrl": "get_qianfan_graph",
             "isAPI": 1,
             "weight":1,
             "question": "请添加提示词，比如描述这张图片"

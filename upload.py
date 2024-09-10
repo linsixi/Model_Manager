@@ -1,10 +1,14 @@
 import os
 from obs import ObsClient
-#例子
+
+# 例子
 """   bucket_name = "qg23onnx"
     object_key = "Upload/0274ba1f-4efb-4ea3-ac8f-b09cf947e9cd.png"  # OBS中文件的完整路径
     local_folder = "download"  # 你希望保存下载文件的本地文件夹
+    https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/output/as-nxprubxuwi.png # 需要的下载链接
+    https://obs.cn-south-1.myhuaweicloud.com/output/as-nxprubxuwi.png # 返回的下载链接
 """
+
 
 def upload_file(bucket_name, object_key, file_path, endpoint, ak, sk):
     """
@@ -28,3 +32,17 @@ def upload_file(bucket_name, object_key, file_path, endpoint, ak, sk):
         return url
     except Exception as e:
         print(f"error：{e}")
+
+
+def convert_url(original_url, bucket_name):
+    # 根据"obs.cn-south-1.myhuaweicloud.com"和"https://"分割URL
+    split_feature = "https://"
+    parts = original_url.split(split_feature)
+
+    # 检查是否分割成功
+    if len(parts) > 1:  # 判断有没有这个分割
+        new_url = split_feature + bucket_name + '.' + parts[1]  # 拼接成新的URL
+        return new_url
+    else:
+        print("上传函数的返回url分割失败")
+        return None  # 如果分割失败，返回None或其他提示信息

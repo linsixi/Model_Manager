@@ -8,7 +8,7 @@ import os
 from upload import upload_file
 
 # 上传需要
-from upload import upload_file
+from upload import upload_file,convert_url
 
 AK = "F915WYG9INM7JCMKWYA8"
 SK = "bWMR0xxcVBxOA6URk86efzREAOXLzoZvu6lkU00M"
@@ -127,10 +127,15 @@ def get_qianfan_graph(question, per):
     plt.imshow(image)
     plt.axis('off')
     plt.show()
+    # 上传文件
     image_local_folder = os.path.join(folder_path, image_id + '.png')
-    object_key = os.path.join(object_key_first+'/'+image_id + '.png')
+    object_key = os.path.join(object_key_first + '/' + image_id + '.png')
     image.save(image_local_folder)
     image_url = upload_file(bucket_name, object_key, image_local_folder, ENDPOINT, AK, SK)
+    print(image_url,"处理前")
+    # 处理image_url变成可以下载的url，例子在upload文件里
+    image_url=convert_url(image_url,bucket_name)
+    print(image_url)
     return image_url
 
 
