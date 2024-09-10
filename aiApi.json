@@ -28,7 +28,8 @@
             "modelName": "get_zidongtaichu",
             "modelUrl": "https://www.baidu.com",
             "isAPI": 1,
-            "weight":1
+            "weight":1,
+            "question": "请添加提示词，比如描述这张图片"
           }
         ]
       }
