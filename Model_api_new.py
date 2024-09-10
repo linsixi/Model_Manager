@@ -151,7 +151,7 @@ def choice( n ):
     return switcher.get( n, '没有该功能' )
 
 
-def main():
+def api_check( n, question, per ):
     '''
     n = input( '需要的功能:' )                        # 需要模型的编号
     per = input( '输入想问的问题：')                   # 用户对于结果自定义的提问
@@ -159,9 +159,9 @@ def main():
     question = input( 'question: ' )                # 模型输出的文本结果
 
     '''
-    n = 5
-    per = '这是什么'
-    question = '苹果'
+    # n = 5
+    # per = '这是什么'
+    # question = '苹果'
     n = str( n )
     need = choice( n )
     print(f'我是{need}，正在对模型的输出结果进行最后一步处理...')
@@ -170,7 +170,7 @@ def main():
             result = get_qianfan_text( question, per )
         elif n == '2':
             result = get_zidongtaichu( question, per )
-        elif n == '3':
+        elif n == '3':S
             result = get_qianfan_graph( question, per )
         elif n == '4':
             result = get_qianfan_read( question, per )
@@ -180,6 +180,3 @@ def main():
         personalized_api()
         print( '处理完成！' )
 
-
-if __name__ == '__main__':
-    main()
