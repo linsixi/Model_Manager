@@ -4,6 +4,18 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 from PIL import Image
 import base64
+import os
+from upload import upload_file
+
+# 上传需要
+from upload import upload_file
+
+AK = "F915WYG9INM7JCMKWYA8"
+SK = "bWMR0xxcVBxOA6URk86efzREAOXLzoZvu6lkU00M"
+ENDPOINT = "https://obs.cn-south-1.myhuaweicloud.com"
+bucket_name = "qg23onnx"
+folder_path = 'save'
+object_key_first = 'output'
 
 
 def personalized_api():
@@ -107,13 +119,19 @@ def get_qianfan_graph(question, per):
         print(f'request failed,status_code:{response.status_code},body:{body}')
     response_dict = response.json()
     b64_image = response_dict['data'][0]['b64_image']
+    image_id = response_dict['id']
 
     # plt显示图片
-    image_data = base64.b64decode( b64_image )
+    image_data = base64.b64decode(b64_image)
     image = Image.open(BytesIO(image_data))
-    plt.imshow( image )
+    plt.imshow(image)
     plt.axis('off')
     plt.show()
+    image_local_folder = os.path.join(folder_path, image_id + '.png')
+    object_key = os.path.join(object_key_first+'/'+image_id + '.png')
+    image.save(image_local_folder)
+    image_url = upload_file(bucket_name, object_key, image_local_folder, ENDPOINT, AK, SK)
+    return image_url
 
 
 def get_qianfan_read(question, per):
@@ -153,7 +171,7 @@ def choice(n):
     return switcher.get(n, '没有该功能')
 
 
-def api_check( n, question, per ):
+def api_check(n, question, per):
     '''
     n = input( '需要的功能:' )                        # 需要模型的编号
     per = input( '输入想问的问题：')                   # 用户对于结果自定义的提问
@@ -181,4 +199,3 @@ def api_check( n, question, per ):
     else:
         personalized_api()
         print('处理完成！')
-
