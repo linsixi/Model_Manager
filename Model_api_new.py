@@ -8,7 +8,7 @@ import os
 from upload import upload_file
 
 # 上传需要
-from upload import upload_file,convert_url
+from upload import upload_file, convert_url
 
 AK = "F915WYG9INM7JCMKWYA8"
 SK = "bWMR0xxcVBxOA6URk86efzREAOXLzoZvu6lkU00M"
@@ -133,7 +133,7 @@ def get_qianfan_graph(question, per):
     image.save(image_local_folder)
     image_url = upload_file(bucket_name, object_key, image_local_folder, ENDPOINT, AK, SK)
     # 处理image_url变成可以下载的url，例子在upload文件里
-    image_url=convert_url(image_url,bucket_name)
+    image_url = convert_url(image_url, bucket_name)
     return image_url
 
 
@@ -198,7 +198,9 @@ def api_check(n, question, per):
         elif n == '4':
             result = get_qianfan_read(question, per)
         print('处理完成！')
-        print(result)
+        print(result,"api.check")
+        return result
     else:
         personalized_api()
         print('处理完成！')
+

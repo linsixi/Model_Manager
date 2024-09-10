@@ -114,7 +114,7 @@ def read_json(data):
             noisy_matrix.tolist()
             value = MAS_Function.change_value(value_tabel, noisy_matrix)
 
-            print(value)
+            print(value,"2222")
     """except Exception as e:
         print("错误类型：", type(e).__name__)
         print("错误信息：", str(e))"""
