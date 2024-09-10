@@ -12,6 +12,7 @@ import Model_api as api  # 调用大模型的函数
 from download import download_file  # 下载模型函数
 import upload  # 上传图片函数
 from DP_Function import differential_privacy_update
+
 """
 ##  符号解释
 """ """         三个双引号代表其中的内容可以直接替换
@@ -98,13 +99,14 @@ def read_json(data):
 
                 else:  # 模型调用大模型
                     n = switcher.get(model["modelName"])
-                    value_tabel.append(api.api_check(n, value))
+                    question_text = model["question"]
+                    value_tabel.append(api.api_check(n, value, question_text))
             weight_matrix = np.array(weight_matrix)
             noisy_matrix = differential_privacy_update(weight_matrix, iteration=1)
             # 归一化
             total_sum = np.sum(noisy_matrix)
             if total_sum != 0:
-                noisy_matrix =  noisy_matrix / total_sum
+                noisy_matrix = noisy_matrix / total_sum
             else:
                 noisy_matrix = np.zeros_like(weight_matrix)
             noisy_matrix.tolist()

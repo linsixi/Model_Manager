@@ -120,15 +120,15 @@ def image_to_base64(image_path):
         return base64_encoded
 
 
-def api_check(n, question):
+def api_check(n, question,question_text):#question_text是大模型提示词
 
     if n == '1':
-        result = get_qianfan_text( question )
+        result = get_qianfan_text( question,question_text )
     elif n == '2':
-        result = get_zidongtaichu( question )
+        result = get_zidongtaichu( question,question_text )
     elif n == '3':
-        result = get_qianfan_graph( question )
+        result = get_qianfan_graph( question,question_text )
     elif n == '4':
-        result = get_qianfan_read( question )
+        result = get_qianfan_read( question,question_text )
     print( result )
 

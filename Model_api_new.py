@@ -7,7 +7,7 @@ import base64
 
 def personalized_api():
     print( '请给出你的请求文件' )
-    with open( '../params.json', 'r', encoding='utf-8' ) as f:
+    with open( './params.json', 'r', encoding='utf-8' ) as f:
         info = json.load( f )
         api = info["api"]
         print( api )
@@ -18,7 +18,7 @@ def personalized_api():
     response = requests.post( api, json=params, headers=headers, stream=False )
     if response.status_code == 200:
         response_json = response.json()
-        with open( '../response.json', 'w', encoding='utf-8' ) as f:
+        with open( './response.json', 'w', encoding='utf-8' ) as f:
             json.dump( response_json, f, indent=4, ensure_ascii=False )
     else:
         body = response.content.decode('utf-8')
