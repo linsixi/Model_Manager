@@ -6,6 +6,7 @@ import requests
 import argparse
 
 # 自建使用函数
+from judge_list import check_model_list  # 运行前检查函数
 import MAS_Function  # MAS收敛函数
 import model_judge as judge  # 判断模型类型并输出结果
 import Model_api_new as api  # 调用大模型的函数
@@ -45,6 +46,12 @@ local_folder = "download"  # 你希望保存下载文件的本地文件夹
 # 这里设置读取模型返回的值
 def read_json(data):
     # 设置大模型对应的字典
+    error = check_model_list(data)
+    error_id = error["error_id"]
+    error_message = error["message"]
+    if error_id != 0:
+        data.update({"error": error_message})
+        return data
     switcher = {
         'get_qianfan_text': '1',
         'get_zidongtaichu': '2',
@@ -80,8 +87,8 @@ def read_json(data):
 
                 else:  # 模型调用大模型
                     n = switcher.get(model["modelUrl"])
-                    question_text=model["question"]
-                    value = api.api_check(n, value,question_text)
+                    question_text = model["question"]
+                    value = api.api_check(n, value, question_text)
 
 
         else:
@@ -97,7 +104,7 @@ def read_json(data):
                     url = model["modelUrl"].split('https://obs.cn-south-1.myhuaweicloud.com/')[-1]
                     print(url)
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
-                    value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type))#判断是什么类型
+                    value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type))  # 判断是什么类型
 
                 else:  # 模型调用大模型
                     n = switcher.get(model["modelUrl"])
@@ -114,7 +121,7 @@ def read_json(data):
             noisy_matrix.tolist()
             value = MAS_Function.change_value(value_tabel, noisy_matrix)
 
-            print(value,"2222")
+            print(value, "2222")
     """except Exception as e:
         print("错误类型：", type(e).__name__)
         print("错误信息：", str(e))"""
