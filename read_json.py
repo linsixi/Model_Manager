@@ -11,7 +11,7 @@ import MAS_Function  # MAS收敛函数
 import model_judge as judge  # 判断模型类型并输出结果
 import Model_api_new as api  # 调用大模型的函数
 from download import download_file  # 下载模型函数
-import upload  # 上传图片函数
+from upload import convert_download_url  # 上传图片函数
 from DP_Function import differential_privacy_update
 
 """
@@ -81,6 +81,7 @@ def read_json(data):
                 # 判断模型是本地还是调用大模型
                 if model["isAPI"] == 0:  # 模型为本地
                     url = model["modelUrl"].split('https://obs.cn-south-1.myhuaweicloud.com/')[-1]
+                    url = convert_download_url(url,bucket_name)
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
                     # 在函数内部判断模型是mindir还是onnx
                     value = judge.get_value(model["modelName"], model_path, value, in_type)
@@ -102,7 +103,7 @@ def read_json(data):
                 # 判断模型是本地还是调用大模型
                 if model["isAPI"] == 0:  # 模型为本地
                     url = model["modelUrl"].split('https://obs.cn-south-1.myhuaweicloud.com/')[-1]
-                    print(url)
+                    url = convert_download_url(url,bucket_name)
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
                     value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type))  # 判断是什么类型
 
