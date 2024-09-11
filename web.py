@@ -1,13 +1,20 @@
 import asyncio
 from fastapi import FastAPI, File, UploadFile, WebSocket
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
 import uvicorn
-import json
 import json
 from read_json import read_json
 import numpy as np
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 允许所有来源
+    allow_credentials=True,
+    allow_methods=["*"],  # 允许所有方法
+    allow_headers=["*"],  # 允许所有头
+)
 
 
 # 判断连接是否成功路由

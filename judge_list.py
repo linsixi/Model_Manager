@@ -36,43 +36,31 @@ def check_model_list(data):
 if __name__ == "__main__":
     # JSON输入
     json_input = {
-      "content":"",
-      "image":"https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/Upload/6c669115-07f1-446c-afbc-159013adb177.png",
-      "modelList": [
-        {
-          "layer": 1,
-          "parallel": 1,
-          "models": [
+        "image": "",
+        "content": "123",
+        "modelList": [
             {
-              "modelName": "resnet50-CLDC.onnx",
-              "modelUrl": "https://obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
-              "isAPI": 1,
-              "weight":1
-            },
-            {
-              "modelName": "resnet50-CLDC.onnx",
-              "modelUrl": "https://obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
-              "isAPI": 0,
-              "weight":1
+                "layer": 1,
+                "parallel": 1,
+                "models": [
+                    {
+                        "modelName": "木薯叶疾病预测模型ResNet50-CLDC",
+                        "modelUrl": "https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
+                        "isAPI": 0,
+                        "weight": 1
+                    },
+                    {
+                        "modelName": "紫东太初大模型1.0",
+                        "modelUrl": "get_zidongtaichu",
+                        "isAPI": 1,
+                        "weight": 1,
+                        "question": "123"
+                    }
+                ]
             }
-          ]
-        },
-        {
-          "layer": 2,
-          "parallel": 0,
-          "models": [
-            {
-              "modelName": "Stable-Diffusion-XL",
-              "modelUrl": "get_qianfan_graph",
-              "isAPI": 0,
-              "weight":1,
-              "question": "请添加提示词，比如描述这张图片"
-            }
-          ]
-        }
-      ],
-      "answer":"",
-      "error" :""
+        ],
+        "answer": "",
+        "error": "工作流中没有模型智能体"
     }
 
     result = check_model_list(json_input)

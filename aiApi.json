@@ -9,7 +9,8 @@
         {
           "modelName": "resnet50-CLDC.onnx",
           "modelUrl": "https://obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
-          "isAPI": 0,
+          https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/transformer-imdb.onnx
+          "isAPI",: 0,
           "weight": 1
         },
         {

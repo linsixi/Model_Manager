@@ -36,3 +36,6 @@ def download_file(bucket_name, object_key, local_folder, endpoint, ak, sk):
         print(f"下载失败：{e}")
 
     return str(download_file_path)
+
+
+

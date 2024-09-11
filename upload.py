@@ -34,7 +34,7 @@ def upload_file(bucket_name, object_key, file_path, endpoint, ak, sk):
         print(f"error：{e}")
 
 
-def convert_url(original_url, bucket_name):
+def convert_upload_url(original_url, bucket_name):
     # 根据"obs.cn-south-1.myhuaweicloud.com"和"https://"分割URL
     split_feature = "https://"
     parts = original_url.split(split_feature)
@@ -46,3 +46,25 @@ def convert_url(original_url, bucket_name):
     else:
         print("上传函数的返回url分割失败")
         return None  # 如果分割失败，返回None或其他提示信息
+
+
+def convert_download_url(original_url, bucket_name):
+    # 根据"obs.cn-south-1.myhuaweicloud.com"和"https://"分割URL
+    split_feature = bucket_name
+    parts = original_url.split(split_feature+'.')
+    print(parts[0])
+    print(parts[1])
+    # 检查是否分割成功
+    if len(parts) > 1:  # 判断有没有这个分割
+        new_url = parts[0] + parts[1]  # 拼接成新的URL
+        return new_url
+    else:
+        print("下载函数的返回url分割失败")
+        return None  # 如果分割失败，返回None或其他提示信息
+
+
+if __name__ == "__main__":
+    url = "https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/transformer-imdb.onnx"
+    bucket_name = "qg23onnx"
+    url = convert_download_url(url, bucket_name)
+    print(url)
