@@ -1,40 +1,27 @@
 {
-  "content": "",
-  "image": "https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/Upload/6c669115-07f1-446c-afbc-159013adb177.png",
+  "image": "",
+  "content": "hello fuck",
   "modelList": [
     {
       "layer": 1,
       "parallel": 1,
       "models": [
         {
-          "modelName": "resnet50-CLDC.onnx",
-          "modelUrl": "https://obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
-          https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/transformer-imdb.onnx
-          "isAPI",: 0,
+          "modelName": "英文影评二元情感识别transformer-imdb",
+          "modelUrl": "https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/transformer-imdb.onnx",
+          "isAPI": 0,
           "weight": 1
         },
         {
-          "modelName": "resnet50-CLDC.onnx",
-          "modelUrl": "https://obs.cn-south-1.myhuaweicloud.com/onnx/resnet50-CLDC.onnx",
-          "isAPI": 0,
-          "weight": 1
-        }
-      ]
-    },
-    {
-      "layer": 2,
-      "parallel": 0,
-      "models": [
-        {
-          "modelName": "Stable-Diffusion-XL",
-          "modelUrl": "get_qianfan_graph",
+          "modelName": "紫东太初大模型1.0",
+          "modelUrl": "get_zidongtaichu",
           "isAPI": 1,
           "weight": 1,
-          "question": "请添加提示词，比如描述这张图片"
+          "question": "123"
         }
       ]
     }
   ],
   "answer": "",
-  "error": ""
+  "errorText": ""
 }

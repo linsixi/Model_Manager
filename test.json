@@ -1,0 +1,27 @@
+{
+  "image": "",
+  "content":"原神启动",
+  "modelList": [
+    {
+      "layer": 1,
+      "parallel": 1,
+      "models": [
+        {
+          "modelName": "英文影评二元情感识别transformer-imdb",
+          "modelUrl": "https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/transformer-imdb.onnx",
+          "isAPI": 0,
+          "weight": 1
+        },
+        {
+          "modelName": "紫东太初大模型1.0",
+          "modelUrl": "get_zidongtaichu",
+          "isAPI": 1,
+          "weight": 1,
+          "question": "123"
+        }
+      ]
+    }
+  ],
+  "answer": "",
+  "errorText": ""
+}
