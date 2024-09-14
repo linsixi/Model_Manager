@@ -55,8 +55,10 @@ def main_voc(vocab_path, onnx_model_path, input_text, pad_size=500):
 
     # 解码输出
     predicted_class = np.argmax(predictions[0], axis=1)
-    print(f"Predicted class: {predicted_class[0]}")
-    return predicted_class[0]
+    if predicted_class == 0:
+        return "消极"
+    else:
+        return "积极"
 
 
 # if __name__ == "__main_voc__":

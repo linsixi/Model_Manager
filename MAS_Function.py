@@ -140,20 +140,39 @@ def Algorithm_2(x, alpha):  # 收敛方法 MWMS-J
     return x
 
 
-def change_value(value_tabel, weight_matrix):
-    tabel = list(set(tuple(value_tabel)))  # 清除相同项
-    nc = len(tabel)
-    matrix = np.zeros((len(weight_matrix), nc))
-    index_map = {tup: i for i, tup in enumerate(tabel)}
-    for i, weight in range(len(weight_matrix)), weight_matrix:
-        for values in value_tabel:
-            print(values)
-            matrix[i][index_map[values]] = weight
-    for col in range(matrix.shape[1]):  # 遍历列
-        for _ in range(3):
-            matrix[:, col] = Algorithm_2(matrix[:, col], 0.5)
-    value_dict = {key: matrix[index_map[key]] for key in tabel}
-    sorted_items = sorted(value_dict.items(), key=lambda item: item[1], reverse=True)
-    # 选择排序后的列表中的前三个元素
-    top_three_keys = [item[0] for item in sorted_items[:3]]
-    return top_three_keys
+def change_value(value_table, weight_matrix):
+    if len(weight_matrix) == 2:
+        max_index = np.argmax(weight_matrix)
+        return value_table[max_index]
+    else:
+        # 将 value_tabel 中的值转换为元组并去重
+        tabel = list(set(tuple(value) for value in value_table))
+        # 列数为去重后的 value_tabel 长度，行数为 weight_matrix 长度
+        nc = len(tabel)
+        matrix = np.zeros((len(weight_matrix), nc))
+        # 为每个独特的值（元组）创建索引映射
+        index_map = {tup: i for i, tup in enumerate(tabel)}
+
+        # 遍历 weight_matrix
+        for i, weight in enumerate(weight_matrix):
+            for values in value_table:
+                # 检查 values 是否在 index_map 中
+                if values in index_map:
+                    # 更新矩阵中的值
+                    matrix[i][index_map[values]] = weight
+                else:
+                    print(f"Warning: {values} not found in index_map")
+
+        # 遍历列，并进行算法处理
+        for col in range(matrix.shape[1]):
+            for _ in range(3):
+                matrix[:, col] = Algorithm_2(matrix[:, col], 0.5)
+
+        # 创建字典，其中键是 tabel 中的值，值是矩阵的列
+        value_dict = {key: matrix[:, index_map[key]] for key in tabel}
+        # 对字典按列的最大值排序
+        sorted_items = sorted(value_dict.items(), key=lambda item: np.max(item[1]), reverse=True)
+        # 选择排序后的前三个元素的键
+        top_three_keys = [item[0] for item in sorted_items[:3]]
+        return top_three_keys
+

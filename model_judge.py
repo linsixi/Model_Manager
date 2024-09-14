@@ -1,6 +1,7 @@
 import sys  # 用于程序直接退出
 import general_mindir as gm     # mindir模型读取通用代码（目前只支持读入图片）
 import image_pred_onnx as image_pred
+from use_language_mode import main_voc
 
 
 # 用来获取模型的类型
@@ -17,10 +18,10 @@ def get_value(model_name, model_path, value, in_type):
     model_type = get_model_type(model_path)
 
     if model_type == 0:  # 模型是onnx文件
-        if in_type == 1:
+        if in_type == 1:  # 输入是图片
             value = image_pred.use_model(model_path, value)
-#        else:
-#            value = emotion_analyse.main(vocab_path, model_path, value)
+        else:  # 输入是文字
+            value = main_voc("vocab.txt", model_path, value)
 
     elif model_type == 1:  # 模型是mindir文件
         if in_type == 1:
