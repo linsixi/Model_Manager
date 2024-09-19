@@ -1,6 +1,6 @@
 {
-  "image": "save/as-nxprubxuwi.png",
-  "content": "",
+  "image": "",
+  "content": "hello",
   "modelList": [
     {
       "layer": 1,
@@ -8,7 +8,7 @@
       "models": [
         {
           "modelName": "英文影评二元情感识别transformer-imdb",
-          "modelUrl": "new_LSTM_model.onnx",
+          "modelUrl": "https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/transformer-imdb.onnx",
           "isAPI": 0,
           "weight": 0.4
         },
