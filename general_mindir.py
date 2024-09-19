@@ -1,3 +1,4 @@
+import json
 import os
 from mindspore import nn, Tensor
 from mindspore import dtype as mstype
@@ -47,20 +48,20 @@ def get_tensor_shape(model, image_path):
     return output.shape
 
 
-def predict(model, image_path):
-    labels = {0: 'airplane', 1: 'automobile', 2: 'bird', 3: 'cat', 4: 'deer', 5: 'dog', 6: 'frog', 7: 'horse',
-                      8: 'ship', 9: 'truck'}
+def predict(model, image_path, map_path):
     """使用给定模型预测输入图像的标签。"""
     image = preprocess_image(image_path)
     output = model(image)
-    label = labels[argmax(output).asnumpy()[0]]
-    return label  # 返回模型的输出
+    predicted_class = argmax(output).asnumpy()[0]  # 提取预测结果并转换为普通整数
+    general_map = json.load(map_path)
+    answer = general_map[str(predicted_class)]
+    return answer
 
 
 # mindir模型使用的通用
-def main_mindir(model_path, img_path):
+def main_mindir(model_path, img_path, map_path):
     model = load_model(model_path)
 
     if os.path.isfile(img_path):
-        output = predict(model, img_path)
+        output = predict(model, img_path, map_path)
     return output

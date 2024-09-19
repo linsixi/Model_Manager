@@ -1,3 +1,4 @@
+import json
 import re
 import torch
 import numpy as np
@@ -39,7 +40,7 @@ def predict(features, ort_session):
 
 
 # 使用主函数即可，传入字典地址，模型地址，输入文本，分词数量
-def main_voc(vocab_path, onnx_model_path, input_text, pad_size=500):
+def main_voc(vocab_path, onnx_model_path, input_text, map_path, pad_size=500):
     # 加载词典
     vocab = load_vocab(vocab_path)
 
@@ -55,10 +56,10 @@ def main_voc(vocab_path, onnx_model_path, input_text, pad_size=500):
 
     # 解码输出
     predicted_class = np.argmax(predictions[0], axis=1)
-    if predicted_class == 0:
-        return "消极"
-    else:
-        return "积极"
+    # 映射字典
+    general_map = json.load(map_path)
+    answer = general_map[str(predicted_class)]
+    return answer
 
 
 # if __name__ == "__main_voc__":

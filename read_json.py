@@ -81,8 +81,9 @@ def read_json(data):
                 if model["isAPI"] == 0:  # 模型为本地
                     url = model["modelUrl"].split('https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/')[-1]
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
+                    map_path = "download/disease_map.json"
                     # 在函数内部判断模型是mindir还是onnx
-                    value = judge.get_value(model["modelName"], model_path, value, in_type)
+                    value = judge.get_value(model["modelName"], model_path, value, in_type, map_path)
 
                 else:  # 模型调用大模型
                     n = switcher.get(model["modelUrl"])
@@ -102,7 +103,8 @@ def read_json(data):
                 if model["isAPI"] == 0:  # 模型为本地
                     url = model["modelUrl"].split('https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/')[-1]
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
-                    value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type))  # 判断是什么类型
+                    map_path = "download/disease_map.json"
+                    value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type, map_path))  # 判断是什么类型
 
                 else:  # 模型调用大模型
                     n = switcher.get(model["modelUrl"])

@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from PIL import Image
 import torchvision.transforms as transforms
-
+import json
 
 def load_and_preprocess_images(image_path, shape_list):
     images = []
@@ -37,7 +37,7 @@ def load_and_preprocess_images(image_path, shape_list):
     return normalized_images, image_ids
 
 
-def use_model(onnx_model_path, image_folder):
+def use_model(onnx_model_path, image_folder, map_path):
     ort_session = ort.InferenceSession(onnx_model_path)
     input_metadata = ort_session.get_inputs()
     shape_list = []
@@ -58,13 +58,6 @@ def use_model(onnx_model_path, image_folder):
     predicted_class = np.argmax(ort_outs[0], axis=1).item()  # 提取预测结果并转换为普通整数
     # 输出预测结果
     # 映射字典
-    disease_map = {
-        "0": "木薯细菌性枯萎病（CBB）",
-        "1": "木薯褐条纹病（CBSD）",
-        "2": "木薯绿斑驳 （CGM）",
-        "3": "木薯花叶病（CMD）",
-        "4": "健康"
-    }
-    # 将预测结果映射为疾病名称
-    predicted_diseases = disease_map[str(predicted_class)]
-    return predicted_diseases
+    general_map = json.load(map_path)
+    answer = general_map[str(predicted_class)]
+    return answer

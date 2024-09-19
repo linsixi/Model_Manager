@@ -14,18 +14,18 @@ def get_model_type(model_path):
     return model_types.get(extension, -1)  # 如果后缀名不在字典中，返回-1
 
 
-def get_value(model_name, model_path, value, in_type):
+def get_value(model_name, model_path, value, in_type, map_path):
     model_type = get_model_type(model_path)
 
     if model_type == 0:  # 模型是onnx文件
         if in_type == 1:  # 输入是图片
-            value = image_pred.use_model(model_path, value)
+            value = image_pred.use_model(model_path, value, map_path)
         else:  # 输入是文字
-            value = main_voc("vocab.txt", model_path, value)
+            value = main_voc("vocab.txt", model_path, value, map_path)
 
     elif model_type == 1:  # 模型是mindir文件
         if in_type == 1:
-            value = gm.main_mindir(model_path, value)
+            value = gm.main_mindir(model_path, value, map_path)
 
     else:  # 模型类似不符
         print("请使用mindir或onnx类型的模型")
