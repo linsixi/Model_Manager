@@ -57,8 +57,10 @@ def main_voc(vocab_path, onnx_model_path, input_text, map_path, pad_size=500):
     # 解码输出
     predicted_class = np.argmax(predictions[0], axis=1)
     # 映射字典
-    general_map = json.load(map_path)
-    answer = general_map[str(predicted_class)]
+    with open(map_path, 'r',encoding='utf-8') as file:
+        general_map = json.load(file)
+    answer = general_map[str(predicted_class[0])]
+    print(answer)
     return answer
 
 

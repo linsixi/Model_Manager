@@ -66,5 +66,5 @@ def convert_upload_url(original_url, bucket_name):
 if __name__ == "__main__":
     url = "https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/onnx/transformer-imdb.onnx"
     bucket_name = "qg23onnx"
-    url = convert_download_url(url, bucket_name)
+    url = convert_upload_url(url, bucket_name)
     print(url)

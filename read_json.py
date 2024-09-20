@@ -10,7 +10,7 @@ from judge_list import check_model_list  # 运行前检查函数
 import MAS_Function  # MAS收敛函数
 import model_judge as judge  # 判断模型类型并输出结果
 import Model_api_new as api  # 调用大模型的函数
-from download import download_file  # 下载模型函数
+from download import download_file, model_json_url  # 下载模型函数
 from DP_Function import differential_privacy_update
 
 """
@@ -103,8 +103,10 @@ def read_json(data):
                 if model["isAPI"] == 0:  # 模型为本地
                     url = model["modelUrl"].split('https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/')[-1]
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
-                    map_path = "download/disease_map.json"
-                    value_tabel.append(judge.get_value(model["modelName"], model_path, value, in_type, map_path))  # 判断是什么类型
+                    model_map_url = model_json_url(url)
+                    map_path = download_file(bucket_name, model_map_url, local_folder, ENDPOINT, AK, SK)
+                    value_tabel.append(
+                        judge.get_value(model["modelName"], model_path, value, in_type, map_path))  # 判断是什么类型
 
                 else:  # 模型调用大模型
                     n = switcher.get(model["modelUrl"])

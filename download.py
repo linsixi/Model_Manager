@@ -38,4 +38,13 @@ def download_file(bucket_name, object_key, local_folder, endpoint, ak, sk):
     return str(download_file_path)
 
 
-
+def model_json_url(model_url, ):  # 例子onnx/transformer-imdb.onnx
+    # 使用split方法分割字符串
+    first_url = "model_json"
+    split_name = model_url.split("/")[-1]  # 先按'/'分割，然后取最后一部分
+    print(split_name)  # 输出: transformer-imdb.onnx
+    # 去掉扩展名,#transformer-imdb
+    without_extension = split_name.split('.')[0]
+    final_url = first_url + '/' + without_extension + '.json'
+    print(final_url)
+    return final_url
