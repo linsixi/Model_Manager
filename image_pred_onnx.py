@@ -6,6 +6,7 @@ from PIL import Image
 import torchvision.transforms as transforms
 import json
 
+
 def load_and_preprocess_images(image_path, shape_list):
     images = []
     image_ids = []
@@ -58,6 +59,8 @@ def use_model(onnx_model_path, image_folder, map_path):
     predicted_class = np.argmax(ort_outs[0], axis=1).item()  # 提取预测结果并转换为普通整数
     # 输出预测结果
     # 映射字典
-    general_map = json.load(map_path)
+    with open(map_path, 'r', encoding='utf-8') as file:
+        general_map = json.load(file)
     answer = general_map[str(predicted_class)]
+    print(answer)
     return answer

@@ -81,7 +81,8 @@ def read_json(data):
                 if model["isAPI"] == 0:  # 模型为本地
                     url = model["modelUrl"].split('https://qg23onnx.obs.cn-south-1.myhuaweicloud.com/')[-1]
                     model_path = download_file(bucket_name, url, local_folder, ENDPOINT, AK, SK)
-                    map_path = "download/disease_map.json"
+                    model_map_url = model_json_url(url)
+                    map_path = download_file(bucket_name, model_map_url, local_folder, ENDPOINT, AK, SK)
                     # 在函数内部判断模型是mindir还是onnx
                     value = judge.get_value(model["modelName"], model_path, value, in_type, map_path)
 
