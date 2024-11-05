@@ -49,6 +49,6 @@ async def get_cpu_usage():
 
 # 主监听函数
 if __name__ == "__main__":
-    uvicorn.run(app="web:app", host="10.21.56.118", port=11451, reload=False)  # QG118
+    # uvicorn.run(app="web:app", host="10.21.56.118", port=11451, reload=False)  # QG118
     # uvicorn.run(app="web:app", host="10.21.56.119", port=11451, reload=False)  # QG119
-    # uvicorn.run(app="web:app", host="127.0.0.1", port=8080, reload=False)
+    uvicorn.run(app="web:app", host="127.0.0.1", port=8080, reload=False)
